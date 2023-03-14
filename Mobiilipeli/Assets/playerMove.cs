@@ -8,8 +8,9 @@ public class playerMove : MonoBehaviour
     float r_speed = 90;
     float z; 
 
-    public bool L_isHeldDown = false;
-    public bool R_isHeldDown = false;
+    public bool L_isHeldDown = false,
+                R_isHeldDown = false,
+                dcheck90_270;
 
     public void L_onPress ()
     {
@@ -37,27 +38,40 @@ public class playerMove : MonoBehaviour
 
     void Update()
     {
-        transform.position += transform.up * Time.deltaTime * speed;    // tää liikuttaa alusta koko ajan eteenpäin.
-                                                                        // tän voi siirtää if lauseen sisälle jos haluaa
-                                                                        // että alus ei mee koko ajan eteenpäin, mutta
-                                                                        // sen kanssa on semmonen pikku bugi, että kun 
-                                                                        // painaa a ja d samaan aikaan, niin alus kulkee
-                                                                        // kaks kertaa nopeemmin.
-
-        float z = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime;
-
+        float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
+              limit = transform.rotation.eulerAngles.z;
         
 
-        if (L_isHeldDown == true)
+        if (limit < 91 && limit >= 0)
         {
-            //transform.position += transform.up * Time.deltaTime * speed;
-            transform.Rotate(0, 0, 0.1f);     
+            dcheck90_270 = true;
+            //Debug.Log(dcheck90_270);
         }
 
-        if (R_isHeldDown == true)
+        if (limit < 359  && limit > 270)
+        {
+            dcheck90_270 = false;
+            //Debug.Log(dcheck90_270);
+        }
+
+        transform.position += transform.up * Time.deltaTime * speed;
+        // rivi 57 liikuttaa alusta koko ajan eteenpäin.
+        // tän voi siirtää if lauseen sisälle jos haluaa
+        // että alus ei mee koko ajan eteenpäin, mutta
+        // sen kanssa on semmonen pikku bugi, että kun 
+        // painaa a ja d samaan aikaan, niin alus kulkee
+        // kaks kertaa nopeemmin.    
+
+        if (L_isHeldDown == true && (limit < 90 || dcheck90_270 == false))
         {
             //transform.position += transform.up * Time.deltaTime * speed;
-            transform.Rotate(0, 0, -0.1f);     
+            transform.Rotate(0, 0, 0.2f);     
+        }
+
+        if (R_isHeldDown == true && (limit > 270 || dcheck90_270 == true ))
+        {
+            //transform.position += transform.up * Time.deltaTime * speed;
+            transform.Rotate(0, 0, -0.2f);     
         }
 
         if (Input.GetKey(KeyCode.S) && speed > 0)
@@ -70,17 +84,4 @@ public class playerMove : MonoBehaviour
             speed = speed + 0.005f;
         }
     }
-
-    public void moveLeft() 
-    {
-        transform.Rotate(0, 0, 0.1f);     // tässä kohtaa alus/pelaaja kääntyy
-
-        //z = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime;
-        //Debug.Log("moveLeft() toimii");
-        //transform.position += transform.up * Time.deltaTime * speed;
-        //Debug.Log(z);
-        //Debug.Log("a"); 
-    }
-
-
 }
