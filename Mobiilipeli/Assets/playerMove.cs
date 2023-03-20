@@ -10,6 +10,7 @@ public class playerMove : MonoBehaviour
 
     public bool L_isHeldDown = false,
                 R_isHeldDown = false,
+                wallcheck    = false,
                 dcheck90_270;
 
     public void L_onPress ()
@@ -40,7 +41,6 @@ public class playerMove : MonoBehaviour
     {
         float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
               limit = transform.rotation.eulerAngles.z;
-        
 
         if (limit < 91 && limit >= 0)
         {
@@ -62,19 +62,19 @@ public class playerMove : MonoBehaviour
         // painaa a ja d samaan aikaan, niin alus kulkee
         // kaks kertaa nopeemmin.    
 
-        if (L_isHeldDown == true && (limit < 90 || dcheck90_270 == false))
+        if (L_isHeldDown == true /*&& (limit < 90 || dcheck90_270 == false)*/)
         {
             //transform.position += transform.up * Time.deltaTime * speed;
             transform.Rotate(0, 0, 0.2f);     
         }
 
-        if (R_isHeldDown == true && (limit > 270 || dcheck90_270 == true ))
+        if (R_isHeldDown == true /*&& (limit > 270 || dcheck90_270 == true )*/)
         {
             //transform.position += transform.up * Time.deltaTime * speed;
             transform.Rotate(0, 0, -0.2f);     
         }
 
-        if (Input.GetKey(KeyCode.S) && speed > 0)
+        /*if (Input.GetKey(KeyCode.S) && speed > 0)
         {
             speed = speed - 0.005f;
         } 
@@ -82,6 +82,28 @@ public class playerMove : MonoBehaviour
         if (Input.GetKey(KeyCode.W) && speed < 5)
         {
             speed = speed + 0.005f;
+        }*/
+
+        if (wallcheck == true && speed < 15)
+        {
+            speed = speed + 0.005f;
         }
+
+        if (wallcheck == false && speed > 5)
+        {
+            speed = speed - 0.0035f;
+        }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        wallcheck = true;
+        print("Trigger Entered");
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        wallcheck = false;
+        print("Trigger Exited");
     }
 }

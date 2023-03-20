@@ -11,8 +11,8 @@ public class camera : MonoBehaviour
     {
         transform.position = new Vector3
         (
-            Mathf.Clamp(target.position.x, -20f, 20f),
-            Mathf.Clamp(target.position.y, -6, 19f),
+            Mathf.Clamp(target.position.x, -5f, 13f),
+            Mathf.Clamp(target.position.y, -15, 27f),
             transform.position.z
         );
     }
