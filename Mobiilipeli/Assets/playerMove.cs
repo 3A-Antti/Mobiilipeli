@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playerMove : MonoBehaviour
 {
-    float speed   = 5f;
+    float speed   = 0f;
     float r_speed = 90;
     float z; 
 
@@ -39,6 +39,9 @@ public class playerMove : MonoBehaviour
 
     void Update()
     {
+        print(speed);
+
+
         float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
               limit = transform.rotation.eulerAngles.z;
 
@@ -62,14 +65,39 @@ public class playerMove : MonoBehaviour
         // painaa a ja d samaan aikaan, niin alus kulkee
         // kaks kertaa nopeemmin.    
 
-        if (L_isHeldDown == true /*&& (limit < 90 || dcheck90_270 == false)*/)
+        if (speed > 0) 
         {
+            speed = speed - 0.0005f;
+        }
+
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        {
+            if (speed <= 2)
+            {
+                speed = speed + 0.005f;
+            }
+
+            //transform.position += transform.up * Time.deltaTime * speed;
+        }
+        else
+        if (Input.GetKey(KeyCode.A)/*L_isHeldDown == true*/ /*&& (limit < 90 || dcheck90_270 == false)*/)
+        {
+            if (speed <= 2)
+            {
+                speed = speed + 0.005f;
+            }
+
             //transform.position += transform.up * Time.deltaTime * speed;
             transform.Rotate(0, 0, 0.2f);     
         }
-
-        if (R_isHeldDown == true /*&& (limit > 270 || dcheck90_270 == true )*/)
+        else
+        if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
         {
+            if (speed <= 2)
+            {
+                speed = speed + 0.005f;
+            }
+
             //transform.position += transform.up * Time.deltaTime * speed;
             transform.Rotate(0, 0, -0.2f);     
         }
@@ -84,14 +112,14 @@ public class playerMove : MonoBehaviour
             speed = speed + 0.005f;
         }*/
 
-        if (wallcheck == true && speed < 15)
+        if (wallcheck == true && speed < 5)
         {
-            speed = speed + 0.005f;
-        }
-
-        if (wallcheck == false && speed > 5)
+            speed = speed + 0.0030f;
+        } 
+ 
+        if (wallcheck == false && speed > 2)
         {
-            speed = speed - 0.0035f;
+            speed = speed - 0.00035f;
         }
     }
     
