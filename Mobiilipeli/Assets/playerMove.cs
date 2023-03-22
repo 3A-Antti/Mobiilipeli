@@ -88,7 +88,7 @@ public class playerMove : MonoBehaviour
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
-            transform.Rotate(0, 0, 0.2f);     
+            transform.Rotate(0, 0, 0.8f);     
         }
         else
         if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
@@ -99,15 +99,15 @@ public class playerMove : MonoBehaviour
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
-            transform.Rotate(0, 0, -0.2f);     
+            transform.Rotate(0, 0, -0.8f);     
         }
 
-        /*if (Input.GetKey(KeyCode.S) && speed > 0)
+        if (Input.GetKey(KeyCode.S) && speed > 0)
         {
-            speed = speed - 0.005f;
+            speed = 0f;
         } 
 
-        if (Input.GetKey(KeyCode.W) && speed < 5)
+        /*if (Input.GetKey(KeyCode.W) && speed < 5)
         {
             speed = speed + 0.005f;
         }*/
