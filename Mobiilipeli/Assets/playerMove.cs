@@ -37,7 +37,7 @@ public class playerMove : MonoBehaviour
         //Debug.Log(R_isHeldDown);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         print(speed);
 
@@ -67,14 +67,14 @@ public class playerMove : MonoBehaviour
 
         if (speed > 0) 
         {
-            speed = speed - 0.0005f;
+            speed = speed - 0.005f;
         }
 
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
-            if (speed <= 2)
+            if (speed < 2)
             {
-                speed = speed + 0.005f;
+                speed = speed + 0.1f;
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
@@ -82,24 +82,24 @@ public class playerMove : MonoBehaviour
         else
         if (Input.GetKey(KeyCode.A)/*L_isHeldDown == true*/ /*&& (limit < 90 || dcheck90_270 == false)*/)
         {
-            if (speed <= 2)
+            if (speed < 2)
             {
-                speed = speed + 0.005f;
+                speed = speed + 0.05f;
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
-            transform.Rotate(0, 0, 0.2f);     
+            transform.Rotate(0, 0, 1.5f);     
         }
         else
         if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
         {
-            if (speed <= 2)
+            if (speed < 2)
             {
-                speed = speed + 0.005f;
+                speed = speed + 0.05f;
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
-            transform.Rotate(0, 0, -0.2f);     
+            transform.Rotate(0, 0, -1.5f);     
         }
 
         /*if (Input.GetKey(KeyCode.S) && speed > 0)
@@ -114,12 +114,12 @@ public class playerMove : MonoBehaviour
 
         if (wallcheck == true && speed < 5)
         {
-            speed = speed + 0.0030f;
+            speed = speed + 0.015f;
         } 
  
         if (wallcheck == false && speed > 2)
         {
-            speed = speed - 0.00035f;
+            speed = speed - 0.035f;
         }
     }
     
