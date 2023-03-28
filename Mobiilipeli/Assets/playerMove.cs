@@ -11,7 +11,10 @@ public class playerMove : MonoBehaviour
     public bool L_isHeldDown = false,
                 R_isHeldDown = false,
                 wallcheck    = false,
-                dcheck90_270;
+                dcheck90_270,
+                inputcheck;
+
+    private Rigidbody2D rb2D;
 
     public void L_onPress ()
     {
@@ -37,10 +40,16 @@ public class playerMove : MonoBehaviour
         //Debug.Log(R_isHeldDown);
     }
 
+    void Start()
+    {
+        rb2D = gameObject.GetComponent<Rigidbody2D>();
+    }
+
     void FixedUpdate()
     {
         print(speed);
 
+        rb2D.velocity = Vector3.zero;
 
         float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
               limit = transform.rotation.eulerAngles.z;
@@ -67,14 +76,16 @@ public class playerMove : MonoBehaviour
 
         if (speed > 0) 
         {
-            speed = speed - 0.005f;
+            speed = speed - 0.01f;
         }
 
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
-            if (speed < 2)
+            inputcheck = true;
+
+            if (speed < 0.15)
             {
-                speed = speed + 0.1f;
+                speed = speed + 0.05f;
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
@@ -82,7 +93,9 @@ public class playerMove : MonoBehaviour
         else
         if (Input.GetKey(KeyCode.A)/*L_isHeldDown == true*/ /*&& (limit < 90 || dcheck90_270 == false)*/)
         {
-            if (speed < 2)
+            inputcheck = true;
+
+            if (speed < 0.15)
             {
                 speed = speed + 0.05f;
             }
@@ -93,13 +106,20 @@ public class playerMove : MonoBehaviour
         else
         if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
         {
-            if (speed < 2)
+            inputcheck = true;
+
+            if (speed < 0.15)
             {
                 speed = speed + 0.05f;
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
             transform.Rotate(0, 0, -1.5f);     
+        }
+
+        if (inputcheck = false)
+        {
+            transform.Rotate(0, 0, 0);
         }
 
         /*if (Input.GetKey(KeyCode.S) && speed > 0)
@@ -112,14 +132,14 @@ public class playerMove : MonoBehaviour
             speed = speed + 0.005f;
         }*/
 
-        if (wallcheck == true && speed < 5)
+        if (wallcheck == true && speed < 3 && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
-            speed = speed + 0.015f;
+            speed = speed + 0.05f;
         } 
  
-        if (wallcheck == false && speed > 2)
+        if (wallcheck == false && speed > 1)
         {
-            speed = speed - 0.035f;
+            speed = speed - 0.05f;
         }
     }
     
