@@ -4,56 +4,145 @@ using UnityEngine;
 
 public class getkeyMovement : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 5f;
+    float speed   = 0f;
+    float r_speed = 90;
+    float z; 
 
-    [SerializeField]
-    private float rotationSpeed;
+    int score;
 
-    // Update is called once per frame
-    private void Update()
+    public bool L_isHeldDown = false,
+                R_isHeldDown = false,
+                wallcheck    = false,
+                dcheck90_270;
+
+    double lastInterval;
+
+    public void L_onPress ()
     {
-        /*float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");    
+        L_isHeldDown = true;
+        //Debug.Log(L_isHeldDown);
+    }
+ 
+    public void L_onRelease ()
+    {
+        L_isHeldDown = false;
+        //Debug.Log(L_isHeldDown);
+    }
 
-        Vector2 movementDirection = new Vector2(horizontalInput, verticalInput);
-        float inputMagnitude = Mathf.Clamp01(movementDirection.magnitude);
-        movementDirection.Normalize();
+    public void R_onPress ()
+    {
+        R_isHeldDown = true;
+        //Debug.Log(R_isHeldDown);
+    }
+ 
+    public void R_onRelease ()
+    {
+        R_isHeldDown = false;
+        //Debug.Log(R_isHeldDown);
+    }
 
-        if (movementDirection != Vector2.zero)
+    void Update()
+    {
+        lastInterval = Time.realtimeSinceStartup;
+
+
+    }
+
+    void FixedUpdate()
+    {
+        //print(speed);
+        //print(lastInterval);
+
+        float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
+              limit = transform.rotation.eulerAngles.z;
+
+        if (limit < 91 && limit >= 0)
         {
-            Quaternion toRotation = Quaternion.LookRotation(Vector3.forward, movementDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            dcheck90_270 = true;
+            //Debug.Log(dcheck90_270);
+        }
+
+        if (limit < 359  && limit > 270)
+        {
+            dcheck90_270 = false;
+            //Debug.Log(dcheck90_270);
+        }
+
+        transform.position += transform.up * Time.deltaTime * speed;
+        // rivi 57 liikuttaa alusta koko ajan eteenpäin.
+        // tän voi siirtää if lauseen sisälle jos haluaa
+        // että alus ei mee koko ajan eteenpäin, mutta
+        // sen kanssa on semmonen pikku bugi, että kun 
+        // painaa a ja d samaan aikaan, niin alus kulkee
+        // kaks kertaa nopeemmin.    
+
+        if (speed > 0) 
+        {
+            speed = speed - 0.005f;
+        }
+
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        {
+            if (speed < 1.5)
+            {
+                speed = speed + 0.075f;
+            }
+
+            //transform.position += transform.up * Time.deltaTime * speed;
+        }
+        else
+        if (Input.GetKey(KeyCode.A)/*L_isHeldDown == true*/ /*&& (limit < 90 || dcheck90_270 == false)*/)
+        {
+            if (speed < 1.5)
+            {
+                speed = speed + 0.075f;
+            }
+
+            //transform.position += transform.up * Time.deltaTime * speed;
+            transform.Rotate(0, 0, 2f);     
+        }
+        else
+        if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
+        {
+            if (speed < 1.5)
+            {
+                speed = speed + 0.075f;
+            }
+
+            //transform.position += transform.up * Time.deltaTime * speed;
+            transform.Rotate(0, 0, -2f);     
+        }
+
+        /*if (Input.GetKey(KeyCode.S) && speed > 0)
+        {
+            speed = speed - 0.005f;
+        } 
+
+        if (Input.GetKey(KeyCode.W) && speed < 5)
+        {
+            speed = speed + 0.005f;
         }*/
 
-        float moveX = 0f;
-        float moveY = 0f;       
-
-        //moveX++;
-
-        if (Input.GetKey(KeyCode.W))
+        if (wallcheck == true && speed < 4 && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
-            moveY = 1f;
+            speed = speed + 0.025f;
+        } 
+ 
+        if (wallcheck == false && speed > 1.5)
+        {
+            speed = speed - 0.0035f;
         }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        wallcheck = true;
+        //print("Trigger Entered");
+    }
 
-        /*if (Input.GetKey(KeyCode.S))
-        {
-            moveY = -1f;
-        }*/
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveX = 0.5f;
-            moveY = 1f;   
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveX = -0.5f;
-            moveY = 1f;
-        }
-
-        Vector3 moveDir = new Vector3(moveX, moveY);
-        transform.position += moveDir * speed * Time.deltaTime;
+    void OnTriggerExit2D(Collider2D other)
+    {
+        wallcheck = false;
+        //print("Trigger Exited");
     }
 }

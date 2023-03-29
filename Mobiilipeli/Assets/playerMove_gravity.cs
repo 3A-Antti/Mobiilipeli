@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerMove : MonoBehaviour
+public class playerMove_gravity : MonoBehaviour
 {
     float speed   = 0f;
     float r_speed = 90;
@@ -117,7 +117,7 @@ public class playerMove : MonoBehaviour
             transform.Rotate(0, 0, -1.5f);     
         }
 
-        if (inputcheck = false)
+        if (inputcheck == false)
         {
             transform.Rotate(0, 0, 0);
         }
