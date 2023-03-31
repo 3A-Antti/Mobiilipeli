@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class getkeyMovement : MonoBehaviour
+public class flashlevelMovement : MonoBehaviour
 {
     float speed   = 0f;
     float r_speed = 90;
@@ -86,9 +86,9 @@ public class getkeyMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
         {
-            if (speed < 1.5)
+            if (speed < 10)
             {
-                speed = speed + 0.075f;
+                speed = speed + 1.75f;
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
@@ -96,9 +96,9 @@ public class getkeyMovement : MonoBehaviour
         else
         if (Input.GetKey(KeyCode.A)/*L_isHeldDown == true*/ /*&& (limit < 90 || dcheck90_270 == false)*/)
         {
-            if (speed < 1.5)
+            if (speed < 10)
             {
-                speed = speed + 0.075f;
+                speed = speed + 1.75f;
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
@@ -107,9 +107,9 @@ public class getkeyMovement : MonoBehaviour
         else
         if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
         {
-            if (speed < 1.5)
+            if (speed < 10)
             {
-                speed = speed + 0.075f;
+                speed = speed + 1.75f;
             }
 
             //transform.position += transform.up * Time.deltaTime * speed;
@@ -126,12 +126,12 @@ public class getkeyMovement : MonoBehaviour
             speed = speed + 0.005f;
         }*/
 
-        if (wallcheck == true && speed < 4)
+        if (wallcheck == true && speed < 20)
         {
             speed = speed + 0.025f;
         } 
  
-        if (wallcheck == false && speed > 1.5)
+        if (wallcheck == false && speed > 20)
         {
             speed = speed - 0.0035f;
         }
