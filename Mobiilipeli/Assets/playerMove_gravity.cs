@@ -132,7 +132,7 @@ public class playerMove_gravity : MonoBehaviour
             speed = speed + 0.005f;
         }*/
 
-        if (wallcheck == true && speed < 3 && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        if (wallcheck == true && speed < 5 && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
             speed = speed + 0.05f;
         } 
