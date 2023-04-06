@@ -22,6 +22,7 @@ public class getkeyMovement : MonoBehaviour
 
     public void L_onPress ()
     {
+        Debug.Log("toimii");
         L_isHeldDown = true;
         //Debug.Log(L_isHeldDown);
     }
