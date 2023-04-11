@@ -49,7 +49,7 @@ public class getkeyMovement : MonoBehaviour
     {
         lastInterval = Time.realtimeSinceStartup;
 
-        speedText.text = speed.ToString();
+        //speedText.text = speed.ToString();
     }
 
     void FixedUpdate()
