@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
-public class ButtonScript : MonoBehaviour
+public class scenechancer : MonoBehaviour
 {
     public GameObject Button;
     // Start is called before the first frame update
     void Start()
     {
-    //    Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+        
     }
 
     public void Click()
     {
-        Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+        if(EventSystem.current.currentSelectedGameObject.name == "tutorial_stage")
+        {
+            //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
+            SceneManager.LoadScene(0);
+        }
     }
 
     // Update is called once per frame
