@@ -75,59 +75,41 @@ public class getkeyMovement : MonoBehaviour
         }
 
         transform.position += transform.up * Time.deltaTime * speed;
-        // rivi 57 liikuttaa alusta koko ajan eteenpäin.
-        // tän voi siirtää if lauseen sisälle jos haluaa
-        // että alus ei mee koko ajan eteenpäin, mutta
-        // sen kanssa on semmonen pikku bugi, että kun 
-        // painaa a ja d samaan aikaan, niin alus kulkee
-        // kaks kertaa nopeemmin.    
+        // rivi 57 liikuttaa alusta koko ajan eteenpäin,
+        // mutta alus ei kuitenkaan liiku, koska speed on 0
 
         if (speed > 0) 
         {
             speed = speed - 0.005f;
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        if (L_isHeldDown == true && R_isHeldDown == true/*Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)*/)
         {
             if (speed < 1.5)
             {
                 speed = speed + 0.075f;
             }
-
-            //transform.position += transform.up * Time.deltaTime * speed;
         }
         else
-        if (Input.GetKey(KeyCode.A)/*L_isHeldDown == true*/ /*&& (limit < 90 || dcheck90_270 == false)*/)
+        if (/*Input.GetKey(KeyCode.A)*/L_isHeldDown == true /*&& (limit < 90 || dcheck90_270 == false)*/)
         {
             if (speed < 1.5)
             {
                 speed = speed + 0.075f;
             }
 
-            //transform.position += transform.up * Time.deltaTime * speed;
             transform.Rotate(0, 0, 1.75f);     
         }
         else
-        if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
+        if (/*Input.GetKey(KeyCode.D)*/R_isHeldDown == true /*&& (limit > 270 || dcheck90_270 == true )*/)
         {
             if (speed < 1.5)
             {
                 speed = speed + 0.075f;
             }
 
-            //transform.position += transform.up * Time.deltaTime * speed;
             transform.Rotate(0, 0, -1.75f);     
         }
-
-        /*if (Input.GetKey(KeyCode.S) && speed > 0)
-        {
-            speed = speed - 0.005f;
-        } 
-
-        if (Input.GetKey(KeyCode.W) && speed < 5)
-        {
-            speed = speed + 0.005f;
-        }*/
 
         if (wallcheck == true && speed < 4)
         {

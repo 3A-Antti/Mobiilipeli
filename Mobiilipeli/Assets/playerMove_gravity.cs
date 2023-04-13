@@ -79,7 +79,7 @@ public class playerMove_gravity : MonoBehaviour
             speed = speed - 0.01f;
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        if (L_isHeldDown == true && R_isHeldDown == true/*Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)*/)
         {
             inputcheck = true;
 
@@ -91,7 +91,7 @@ public class playerMove_gravity : MonoBehaviour
             //transform.position += transform.up * Time.deltaTime * speed;
         }
         else
-        if (Input.GetKey(KeyCode.A)/*L_isHeldDown == true*/ /*&& (limit < 90 || dcheck90_270 == false)*/)
+        if (/*Input.GetKey(KeyCode.A)*/L_isHeldDown == true /*&& (limit < 90 || dcheck90_270 == false)*/)
         {
             inputcheck = true;
 
@@ -104,7 +104,7 @@ public class playerMove_gravity : MonoBehaviour
             transform.Rotate(0, 0, 1.5f);     
         }
         else
-        if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
+        if (/*Input.GetKey(KeyCode.D)*/R_isHeldDown == true /*&& (limit > 270 || dcheck90_270 == true )*/)
         {
             inputcheck = true;
 
@@ -132,7 +132,7 @@ public class playerMove_gravity : MonoBehaviour
             speed = speed + 0.005f;
         }*/
 
-        if (wallcheck == true && speed < 5 && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        if (wallcheck == true && speed < 5 && (R_isHeldDown == true || L_isHeldDown == true))
         {
             speed = speed + 0.05f;
         } 
