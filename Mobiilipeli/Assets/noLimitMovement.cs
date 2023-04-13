@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class getkeyMovement : MonoBehaviour
+public class noLimitMovement : MonoBehaviour
 {
-    public float speed   = 0f;
+    float speed   = 0f;
     float r_speed = 90;
     float z; 
 
@@ -48,8 +48,6 @@ public class getkeyMovement : MonoBehaviour
     void Update()
     {
         lastInterval = Time.realtimeSinceStartup;
-
-        //Debug.Log(speed);
 
         //speedText.text = speed.ToString();
     }
@@ -129,14 +127,14 @@ public class getkeyMovement : MonoBehaviour
             speed = speed + 0.005f;
         }*/
 
-        if (wallcheck == true && speed < 4)
+        if (wallcheck == true /*&& speed < 4*/)
         {
             speed = speed + 0.025f;
         } 
  
-        if (wallcheck == false && speed > 1.5)
+        if (wallcheck == false /*&& speed > 1.5*/)
         {
-            speed = speed - 0.0035f;
+            //speed = speed - 0.0035f;
         }
     }
     
