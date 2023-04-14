@@ -51,7 +51,7 @@ public class getkeyMovement : MonoBehaviour
 
         //Debug.Log(speed);
 
-        //speedText.text = speed.ToString();
+        speedText.text = speed.ToString();
     }
 
     void FixedUpdate()
@@ -75,7 +75,7 @@ public class getkeyMovement : MonoBehaviour
         }
 
         transform.position += transform.up * Time.deltaTime * speed;
-        // rivi 57 liikuttaa alusta koko ajan eteenpäin,
+        // rivi 77 liikuttaa alusta koko ajan eteenpäin,
         // mutta alus ei kuitenkaan liiku, koska speed on 0
 
         if (speed > 0) 

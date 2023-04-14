@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class scenechancer : MonoBehaviour
 {
@@ -48,6 +49,12 @@ public class scenechancer : MonoBehaviour
             //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
             SceneManager.LoadScene(4);
         }
+    }
+
+    public void doExitGame() 
+    {
+        EditorApplication.isPlaying=false;
+        Application.Quit();
     }
 
     // Update is called once per frame
