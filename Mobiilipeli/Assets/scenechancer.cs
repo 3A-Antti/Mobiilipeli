@@ -53,7 +53,10 @@ public class scenechancer : MonoBehaviour
 
     public void doExitGame() 
     {
-        EditorApplication.isPlaying=false;
+        #if UNITY_EDITOR
+            EditorApplication.isPlaying=false;
+        #endif
+
         Application.Quit();
     }
 
