@@ -5,7 +5,7 @@ dependencies {
     }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion '30.0.2'
 
     compileOptions {
@@ -14,9 +14,9 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 22
-        targetSdkVersion 30
-        applicationId 'com.DefaultCompany.com.unity.template.mobile2D'
+        minSdkVersion 26
+        targetSdkVersion 31
+        applicationId 'fi.aratkaisut.cosmicape'
         ndk {
             abiFilters 'armeabi-v7a'
         }
