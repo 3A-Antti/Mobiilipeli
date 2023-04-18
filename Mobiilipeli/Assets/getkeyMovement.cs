@@ -7,7 +7,7 @@ using TMPro;
 public class getkeyMovement : MonoBehaviour
 {
     public float speed   = 0f;
-    float r_speed = 90;
+    float r_speed = 2f;
     float z; 
 
     public TextMeshProUGUI speedText;
@@ -22,7 +22,6 @@ public class getkeyMovement : MonoBehaviour
 
     public void L_onPress ()
     {
-        Debug.Log("toimii");
         L_isHeldDown = true;
         //Debug.Log(L_isHeldDown);
     }
@@ -59,7 +58,7 @@ public class getkeyMovement : MonoBehaviour
         //print(speed);
         //print(lastInterval);
 
-        float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
+        /*float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
               limit = transform.rotation.eulerAngles.z;
 
         if (limit < 91 && limit >= 0)
@@ -72,6 +71,30 @@ public class getkeyMovement : MonoBehaviour
         {
             dcheck90_270 = false;
             //Debug.Log(dcheck90_270);
+        }*/
+
+        if (L_isHeldDown && r_speed < 4)
+        {
+            r_speed += 0.04f;
+            Debug.Log(r_speed);
+        } 
+        else 
+        if (!L_isHeldDown && r_speed > 2)
+        {
+            r_speed -= 0.025f;
+            Debug.Log(r_speed);
+        }
+
+        if (R_isHeldDown && r_speed < 4)
+        {
+            r_speed += 0.04f;
+            Debug.Log(r_speed);
+        } 
+        else 
+        if (!R_isHeldDown && r_speed > 2)
+        {
+            r_speed -= 0.025f;
+            Debug.Log(r_speed);
         }
 
         transform.position += transform.up * Time.deltaTime * speed;
@@ -98,7 +121,7 @@ public class getkeyMovement : MonoBehaviour
                 speed = speed + 0.075f;
             }
 
-            transform.Rotate(0, 0, 1.75f);     
+            transform.Rotate(0, 0, r_speed);     
         }
         else
         if (/*Input.GetKey(KeyCode.D)*/R_isHeldDown == true /*&& (limit > 270 || dcheck90_270 == true )*/)
@@ -108,7 +131,7 @@ public class getkeyMovement : MonoBehaviour
                 speed = speed + 0.075f;
             }
 
-            transform.Rotate(0, 0, -1.75f);     
+            transform.Rotate(0, 0, -r_speed);     
         }
 
         if (wallcheck == true && speed < 4)

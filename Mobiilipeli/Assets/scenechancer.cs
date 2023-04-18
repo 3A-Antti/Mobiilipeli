@@ -23,31 +23,31 @@ public class scenechancer : MonoBehaviour
         if(EventSystem.current.currentSelectedGameObject.name == "tutorial_stage")
         {
             //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene("SampleScene");
         }
 
         if(EventSystem.current.currentSelectedGameObject.name == "darkness_stage")
         {
             //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("flashlightlevel");
         }
 
         if(EventSystem.current.currentSelectedGameObject.name == "gravity_stage")
         {
             //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene("gravitylevel");
         }
 
         if(EventSystem.current.currentSelectedGameObject.name == "end_stage")
         {
             //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene("credits_scene");
         }
 
         if(EventSystem.current.currentSelectedGameObject.name == "pause")
         {
             //Debug.Log(EventSystem.current.currentSelectedGameObject.name);
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene("mainMenu");
         }
     }
 

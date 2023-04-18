@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class playerMove_gravity : MonoBehaviour
 {
-    float speed   = 0f;
-    float r_speed = 90;
+    public float speed = 0f;
+    float r_speed      = 2f;
     float z; 
 
     public bool L_isHeldDown = false,
@@ -14,7 +16,11 @@ public class playerMove_gravity : MonoBehaviour
                 dcheck90_270,
                 inputcheck;
 
+    double lastInterval;
+
     private Rigidbody2D rb2D;
+    public TextMeshProUGUI speedText;
+    int score;
 
     public void L_onPress ()
     {
@@ -45,13 +51,22 @@ public class playerMove_gravity : MonoBehaviour
         rb2D = gameObject.GetComponent<Rigidbody2D>();
     }
 
+    void Update()
+    {
+        lastInterval = Time.realtimeSinceStartup;
+
+        //Debug.Log(speed);
+
+        speedText.text = speed.ToString();
+    }
+
     void FixedUpdate()
     {
-        print(speed);
+        //print(speed);
 
         rb2D.velocity = Vector3.zero;
 
-        float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
+        /*float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
               limit = transform.rotation.eulerAngles.z;
 
         if (limit < 91 && limit >= 0)
@@ -64,6 +79,30 @@ public class playerMove_gravity : MonoBehaviour
         {
             dcheck90_270 = false;
             //Debug.Log(dcheck90_270);
+        }*/
+
+        if (L_isHeldDown && r_speed < 4)
+        {
+            r_speed += 0.04f;
+            Debug.Log(r_speed);
+        } 
+        else 
+        if (!L_isHeldDown && r_speed > 2)
+        {
+            r_speed -= 0.025f;
+            Debug.Log(r_speed);
+        }
+
+        if (R_isHeldDown && r_speed < 4)
+        {
+            r_speed += 0.04f;
+            Debug.Log(r_speed);
+        } 
+        else 
+        if (!R_isHeldDown && r_speed > 2)
+        {
+            r_speed -= 0.025f;
+            Debug.Log(r_speed);
         }
 
         transform.position += transform.up * Time.deltaTime * speed;
