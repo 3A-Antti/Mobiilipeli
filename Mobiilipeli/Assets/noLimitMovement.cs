@@ -22,7 +22,6 @@ public class noLimitMovement : MonoBehaviour
 
     public void L_onPress ()
     {
-        Debug.Log("toimii");
         L_isHeldDown = true;
         //Debug.Log(L_isHeldDown);
     }
@@ -49,7 +48,12 @@ public class noLimitMovement : MonoBehaviour
     {
         lastInterval = Time.realtimeSinceStartup;
 
-        //speedText.text = speed.ToString();
+        if (speed < 0)
+        {
+            speedText.text = "0";
+        } else {
+            speedText.text = speed.ToString();
+        }
     }
 
     void FixedUpdate()
@@ -85,8 +89,8 @@ public class noLimitMovement : MonoBehaviour
             speed = speed - 0.005f;
         }
 
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
-        {
+        if (L_isHeldDown == R_isHeldDown)
+        { // L_isHeldDown == R_isHeldDown, eli toisin sanoen, kun molemmat on true
             if (speed < 1.5)
             {
                 speed = speed + 0.075f;
@@ -95,7 +99,7 @@ public class noLimitMovement : MonoBehaviour
             //transform.position += transform.up * Time.deltaTime * speed;
         }
         else
-        if (Input.GetKey(KeyCode.A)/*L_isHeldDown == true*/ /*&& (limit < 90 || dcheck90_270 == false)*/)
+        if (L_isHeldDown)
         {
             if (speed < 1.5)
             {
@@ -106,7 +110,7 @@ public class noLimitMovement : MonoBehaviour
             transform.Rotate(0, 0, 1.75f);     
         }
         else
-        if (Input.GetKey(KeyCode.D)/*R_isHeldDown == true*/ /*&& (limit > 270 || dcheck90_270 == true )*/)
+        if (R_isHeldDown)
         {
             if (speed < 1.5)
             {
@@ -117,23 +121,13 @@ public class noLimitMovement : MonoBehaviour
             transform.Rotate(0, 0, -1.75f);     
         }
 
-        /*if (Input.GetKey(KeyCode.S) && speed > 0)
-        {
-            speed = speed - 0.005f;
-        } 
-
-        if (Input.GetKey(KeyCode.W) && speed < 5)
-        {
-            speed = speed + 0.005f;
-        }*/
-
-        if (wallcheck == true /*&& speed < 4*/)
-        {
+        if (wallcheck)
+        { // ei ole mitään nopeus rajoituksia koska se on koko kentän pointti
             speed = speed + 0.025f;
         } 
  
-        if (wallcheck == false /*&& speed > 1.5*/)
-        {
+        if (!wallcheck)
+        { // ei ole mitään nopeus rajoituksia koska se on koko kentän pointti
             //speed = speed - 0.0035f;
         }
     }
