@@ -19,9 +19,4 @@ public class squareTrigger_lvl2 : MonoBehaviour
             }
         }
     }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        
-    }
 }

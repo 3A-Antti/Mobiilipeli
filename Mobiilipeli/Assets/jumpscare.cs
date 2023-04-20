@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class jumpscare : MonoBehaviour
 {
-    //public gameObject destroyee;
+    public Transform thisObject;
+    public Transform target;
+    
+    float gkmSpeed;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Destroy(gameObject);
+        
+
+        if(other.gameObject.tag == "Player")
+        {
+            target.transform.Rotate(0, 0, -180f);
+        }
+
+        gkmSpeed = GameObject.Find("PLAYER").GetComponent<getkeyMovement>().speed;
     }
 }

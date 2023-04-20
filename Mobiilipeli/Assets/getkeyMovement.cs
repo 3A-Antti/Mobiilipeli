@@ -46,6 +46,11 @@ public class getkeyMovement : MonoBehaviour
 
     void Update()
     {
+        if (L_isHeldDown || R_isHeldDown)
+        {
+            Debug.Log("L_isHeldDown || R_isHeldDown");
+        }
+
         lastInterval = Time.realtimeSinceStartup;
 
         if (speed < 0)
@@ -79,30 +84,26 @@ public class getkeyMovement : MonoBehaviour
         if (L_isHeldDown && r_speed < 4)
         {
             r_speed += 0.04f;
-            Debug.Log(r_speed);
         } 
         else 
         if (!L_isHeldDown && r_speed > 2)
         {
             r_speed -= 0.025f;
-            Debug.Log(r_speed);
         }
 
         if (R_isHeldDown && r_speed < 4)
         {
             r_speed += 0.04f;
-            Debug.Log(r_speed);
         } 
         else 
         if (!R_isHeldDown && r_speed > 2)
         {
             r_speed -= 0.025f;
-            Debug.Log(r_speed);
         }
 
         transform.position += transform.up * Time.deltaTime * speed;
-        // rivi 77 liikuttaa alusta koko ajan eteenpäin,
-        // mutta alus ei kuitenkaan liiku, koska speed on 0
+        // rivi 104 liikuttaa alusta koko ajan eteenpäin,
+        // mutta alus ei kuitenkaan liiku, jos speed on 0
 
         if (speed > 0) 
         {
@@ -137,26 +138,34 @@ public class getkeyMovement : MonoBehaviour
             transform.Rotate(0, 0, -r_speed);     
         }
 
-        if (wallcheck == true && speed < 4)
+        if ((L_isHeldDown || R_isHeldDown) && wallcheck && speed < 4)
         {
             speed = speed + 0.025f;
         } 
  
-        if (wallcheck == false && speed > 1.5)
+        if (!wallcheck && speed > 1.5)
         {
             speed = speed - 0.0035f;
         }
     }
     
+    // OnTriggerEnter2D (rivi 158) ja
+    // OnTriggerExit2D (rivi 164) molemmat kutsutaan
+    // vain kerran per niitten toteutumis ehtojen
+    // mukaan. Funktiot on unityyn sisään rakennettuja,
+    // eikä käyttäjän määrittämiä
+
     private void OnTriggerEnter2D(Collider2D other)
-    {
+    { // funktio kutsutaan triggerin aktivoinnin yhteydessä
         wallcheck = true;
+
         //print("Trigger Entered");
     }
 
     void OnTriggerExit2D(Collider2D other)
-    {
+    { // funktio kutsutaan kun triggeri menee pois päältä
         wallcheck = false;
+        
         //print("Trigger Exited");
     }
 }
