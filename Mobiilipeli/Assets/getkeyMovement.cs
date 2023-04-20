@@ -50,7 +50,7 @@ public class getkeyMovement : MonoBehaviour
 
         //Debug.Log(speed);
 
-        speedText.text = speed.ToString();
+        //speedText.text = speed.ToString();
     }
 
     void FixedUpdate()
