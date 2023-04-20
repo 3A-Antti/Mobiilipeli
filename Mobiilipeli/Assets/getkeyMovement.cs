@@ -6,8 +6,8 @@ using TMPro;
 
 public class getkeyMovement : MonoBehaviour
 {
-    public float speed   = 0f;
-    float r_speed = 2f;
+    public float speed = 0f;
+    float r_speed      = 2f;
     float z; 
 
     public TextMeshProUGUI speedText;
@@ -46,11 +46,6 @@ public class getkeyMovement : MonoBehaviour
 
     void Update()
     {
-        if (L_isHeldDown || R_isHeldDown)
-        {
-            Debug.Log("L_isHeldDown || R_isHeldDown");
-        }
-
         lastInterval = Time.realtimeSinceStartup;
 
         if (speed < 0)
@@ -58,6 +53,11 @@ public class getkeyMovement : MonoBehaviour
             speedText.text = "0";
         } else {
             speedText.text = speed.ToString();
+        }
+
+        if (speed > 1.49)
+        {
+            speedText.text = "1.5";
         }
     }
 
