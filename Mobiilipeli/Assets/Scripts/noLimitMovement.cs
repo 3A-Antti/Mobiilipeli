@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class getkeyMovement : MonoBehaviour
+public class noLimitMovement : MonoBehaviour
 {
-    public float speed = 0f;
-    float r_speed      = 2f;
+    float speed   = 0f;
+    float r_speed = 90;
     float z; 
 
     public TextMeshProUGUI speedText;
@@ -48,17 +48,12 @@ public class getkeyMovement : MonoBehaviour
     {
         lastInterval = Time.realtimeSinceStartup;
 
-        if (speed < 0)
+        /*if (speed < 0)
         {
             speedText.text = "0";
         } else {
             speedText.text = speed.ToString();
-        }
-
-        if (speed > 1.49)
-        {
-            speedText.text = "1.5";
-        }
+        }*/
     }
 
     void FixedUpdate()
@@ -66,7 +61,7 @@ public class getkeyMovement : MonoBehaviour
         //print(speed);
         //print(lastInterval);
 
-        /*float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
+        float z     = Input.GetAxis("Horizontal") * r_speed * Time.deltaTime,
               limit = transform.rotation.eulerAngles.z;
 
         if (limit < 91 && limit >= 0)
@@ -79,93 +74,73 @@ public class getkeyMovement : MonoBehaviour
         {
             dcheck90_270 = false;
             //Debug.Log(dcheck90_270);
-        }*/
-
-        if (L_isHeldDown && r_speed < 4)
-        {
-            r_speed += 0.04f;
-        } 
-        else 
-        if (!L_isHeldDown && r_speed > 2)
-        {
-            r_speed -= 0.025f;
-        }
-
-        if (R_isHeldDown && r_speed < 4)
-        {
-            r_speed += 0.04f;
-        } 
-        else 
-        if (!R_isHeldDown && r_speed > 2)
-        {
-            r_speed -= 0.025f;
         }
 
         transform.position += transform.up * Time.deltaTime * speed;
-        // rivi 104 liikuttaa alusta koko ajan eteenpäin,
-        // mutta alus ei kuitenkaan liiku, jos speed on 0
+        // rivi 57 liikuttaa alusta koko ajan eteenpäin.
+        // tän voi siirtää if lauseen sisälle jos haluaa
+        // että alus ei mee koko ajan eteenpäin, mutta
+        // sen kanssa on semmonen pikku bugi, että kun 
+        // painaa a ja d samaan aikaan, niin alus kulkee
+        // kaks kertaa nopeemmin.    
 
         if (speed > 0) 
         {
             speed = speed - 0.005f;
         }
 
-        if (L_isHeldDown == true && R_isHeldDown == true/*Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)*/)
-        {
+        if (L_isHeldDown == R_isHeldDown)
+        { // L_isHeldDown == R_isHeldDown, eli toisin sanoen, kun molemmat on true
             if (speed < 1.5)
             {
                 speed = speed + 0.075f;
             }
+
+            //transform.position += transform.up * Time.deltaTime * speed;
         }
         else
-        if (/*Input.GetKey(KeyCode.A)*/L_isHeldDown == true /*&& (limit < 90 || dcheck90_270 == false)*/)
+        if (L_isHeldDown)
         {
             if (speed < 1.5)
             {
                 speed = speed + 0.075f;
             }
 
-            transform.Rotate(0, 0, r_speed);     
+            //transform.position += transform.up * Time.deltaTime * speed;
+            transform.Rotate(0, 0, 1.75f);     
         }
         else
-        if (/*Input.GetKey(KeyCode.D)*/R_isHeldDown == true /*&& (limit > 270 || dcheck90_270 == true )*/)
+        if (R_isHeldDown)
         {
             if (speed < 1.5)
             {
                 speed = speed + 0.075f;
             }
 
-            transform.Rotate(0, 0, -r_speed);     
+            //transform.position += transform.up * Time.deltaTime * speed;
+            transform.Rotate(0, 0, -1.75f);     
         }
 
-        if ((L_isHeldDown || R_isHeldDown) && wallcheck && speed < 4)
-        {
+        if (wallcheck)
+        { // ei ole mitään nopeus rajoituksia koska se on koko kentän pointti
             speed = speed + 0.025f;
         } 
  
-        if (!wallcheck && speed > 1.5)
-        {
-            speed = speed - 0.0035f;
+        if (!wallcheck)
+        { // ei ole mitään nopeus rajoituksia koska se on koko kentän pointti
+            //speed = speed - 0.0035f;
         }
     }
     
-    // OnTriggerEnter2D (rivi 158) ja
-    // OnTriggerExit2D (rivi 164) molemmat kutsutaan
-    // vain kerran per niitten toteutumis ehtojen
-    // mukaan. Funktiot on unityyn sisään rakennettuja,
-    // eikä käyttäjän määrittämiä
-
     private void OnTriggerEnter2D(Collider2D other)
-    { // funktio kutsutaan triggerin aktivoinnin yhteydessä
+    {
         wallcheck = true;
-
         //print("Trigger Entered");
     }
 
     void OnTriggerExit2D(Collider2D other)
-    { // funktio kutsutaan kun triggeri menee pois päältä
+    {
         wallcheck = false;
-        
         //print("Trigger Exited");
     }
 }

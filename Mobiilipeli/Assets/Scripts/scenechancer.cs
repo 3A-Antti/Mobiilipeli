@@ -18,8 +18,13 @@ public class scenechancer : MonoBehaviour
         
     }
 
-    public void Click()
+    public void Click(bool tutOver)
     {
+        if(tutOver)
+        {
+            SceneManager.LoadScene("flashlightlevel");
+        }
+        
         if(EventSystem.current.currentSelectedGameObject.name == "tutorial_stage")
         {
             //Debug.Log(EventSystem.current.currentSelectedGameObject.name);

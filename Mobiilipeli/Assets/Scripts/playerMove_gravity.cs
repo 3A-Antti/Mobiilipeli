@@ -55,9 +55,20 @@ public class playerMove_gravity : MonoBehaviour
     {
         lastInterval = Time.realtimeSinceStartup;
 
-        //Debug.Log(speed);
-
-        speedText.text = speed.ToString();
+        if (speedText != null)
+        {
+            if (speed < 0)
+            {
+                speedText.text = "0,000000";
+            } 
+            else
+            if (speed > 1.49 && speed < 1.59)
+            {
+                speedText.text = "1,500000";
+            } else {
+                speedText.text = speed.ToString();
+            }
+        }
     }
 
     void FixedUpdate()

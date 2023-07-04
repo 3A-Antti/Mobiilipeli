@@ -11,18 +11,23 @@ public class score : MonoBehaviour
 
     float storevalue1;// = GameObject.Find("PLAYER").GetComponent<getkeyMovement>().speed;
 
+    bool boost = false;
+
     int hitCount = 0;
 
     void Start()
     { // Start kutsutaan ennen ekaa frame päivitystä
         highScore.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
-        
     }
 
     void Update()
     { // Update kutsutaan kerran per frame
         storevalue1 = GameObject.Find("PLAYER").GetComponent<getkeyMovement>().speed;
 
+        /*if (boost)
+        {
+            hitCount++;
+        }*/
         //Debug.Log(storevalue1);
     }
 
@@ -32,8 +37,6 @@ public class score : MonoBehaviour
         {
             hitCount++;
         }*/
-
-        hitCount++;
 
         scoreText.text = hitCount.ToString();
 
@@ -46,11 +49,13 @@ public class score : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {   // OnTriggerEnter2D kutsutaan triggerin aktivoinnin yhteydessä.
+        hitCount += 25;
+        boost = true;
         enterData();
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {   // OnTriggerExit2D kutsutaan kun trigger menee pois päältä
-        
+        boost = false;
     }
 }
